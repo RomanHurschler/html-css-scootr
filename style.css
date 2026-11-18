@@ -1,0 +1,192 @@
+/* =========================================
+   1. Design-Tokens (CSS-Variablen)
+   ========================================= */
+:root {
+  /* Farben */
+  --color-bg: #f2f3f5;
+  --color-surface: #ffffff;
+  --color-text: #16181d;
+  --color-muted: #50565e;
+  --color-border: #dcdfe4;
+  --color-dark: #111316;
+
+  /* Schriften */
+  --font-body: "Work Sans", system-ui, Arial, sans-serif;
+  --font-heading: "Sora", system-ui, Arial, sans-serif;
+  --fs-small: 0.8rem;
+  --fs-body: 1rem;
+  --fs-h3: 1.25rem;
+  --fs-h2: clamp(1.75rem, 1.3rem + 1.8vw, 2.6rem);
+  --fs-h1: clamp(2rem, 1.2rem + 3.5vw, 3.6rem);
+
+  /* Abstände */
+  --space-xs: 0.5rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: 5rem;
+
+  /* Sonstiges */
+  --radius-pill: 999px;
+  --container: 1280px;
+  --header-height: 82px;
+}
+
+/* =========================================
+   2. Reset & Basis
+   ========================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 var(--space-s);
+  font-family: var(--font-heading);
+  line-height: 1.15;
+}
+
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+
+p {
+  margin: 0 0 var(--space-s);
+}
+
+a {
+  color: inherit;
+}
+
+/* Sichtbarer Fokus für Tastatur-Navigation (Tab) */
+a:focus-visible {
+  outline: 3px solid var(--color-dark);
+  outline-offset: 3px;
+}
+
+/* =========================================
+   3. Layout
+   ========================================= */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--space-m);
+}
+
+.section {
+  padding: var(--space-xl) 0;
+  scroll-margin-top: var(--header-height); /* Header verdeckt Überschrift nicht */
+}
+
+/* =========================================
+   4. Buttons
+   ========================================= */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.3rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btn--outline {
+  border: 1.5px solid var(--color-dark);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-dark);
+  color: #fff;
+}
+
+/* =========================================
+   5. Header & Navigation
+   ========================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* 3 Spalten: Logo links – Navigation Mitte – Button rechts */
+.nav-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-m);
+  min-height: var(--header-height);
+}
+
+.brand {
+  justify-self: start;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+}
+
+.main-nav {
+  display: flex;
+  gap: var(--space-m);
+}
+
+.main-nav a {
+  color: var(--color-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.main-nav a:hover {
+  color: var(--color-text);
+}
+
+.nav-cta {
+  justify-self: end;
+}
+
+/* =========================================
+   6. Responsive
+   ========================================= */
+/* Kleine Bildschirme: Navigation ausblenden, nur Logo + Button */
+@media (max-width: 860px) {
+  .main-nav {
+    display: none;
+  }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0 var(--space-s);
+  }
+}
