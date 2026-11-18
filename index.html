@@ -14,6 +14,7 @@
 </head>
 <body id="top">
 
+    <!-- ===== Header (Teil 1) ===== -->
     <header class="site-header">
         <div class="container nav-row">
             <a href="#top" class="brand">SCOOTR</a>
@@ -30,7 +31,55 @@
     </header>
 
     <main>
-        <!-- Platzhalter: Sprungziele für die Navigation (Inhalt folgt in Teil 2 und 3) -->
+
+        <!-- ===== Hero mit Video-Slider (Teil 2) ===== -->
+        <section class="hero">
+            <div class="container">
+                <div class="slider" aria-label="SCOOTR Bildslider">
+                    <video class="slider-video" autoplay muted loop playsinline>
+                        <source src="8992899-uhd_3840_2160_30fps.mp4" type="video/mp4">
+                    </video>
+
+                    <div class="slides">
+                        <article class="slide is-active">
+                            <div class="slide-content">
+                                <p class="eyebrow">Urban Mobility</p>
+                                <h1>Clean rides for the next move.</h1>
+                                <p>Flexibel mieten, schnell starten, smart durch die City.</p>
+                                <a class="btn btn-primary" href="jetzt-mieten.html">Jetzt mieten</a>
+                            </div>
+                        </article>
+                        <article class="slide">
+                            <div class="slide-content">
+                                <p class="eyebrow">Fast Access</p>
+                                <h2>Scan. Unlock. Ride.</h2>
+                                <p>QR scannen und in Sekunden aufsteigen.</p>
+                                <a class="btn btn-primary" href="jetzt-mieten.html">Jetzt mieten</a>
+                            </div>
+                        </article>
+                        <article class="slide">
+                            <div class="slide-content">
+                                <p class="eyebrow">Premium Fleet</p>
+                                <h2>Designed for city speed.</h2>
+                                <p>Stabile Modelle, klare Preise und smarte Parkzonen.</p>
+                                <a class="btn btn-primary" href="jetzt-mieten.html">Jetzt mieten</a>
+                            </div>
+                        </article>
+                    </div>
+
+                    <button class="slider-btn prev" type="button" aria-label="Vorheriger Slide">&#8592;</button>
+                    <button class="slider-btn next" type="button" aria-label="Nächster Slide">&#8594;</button>
+
+                    <div class="dots" aria-label="Slider Navigation">
+                        <button class="dot is-active" type="button" aria-label="Slide 1"></button>
+                        <button class="dot" type="button" aria-label="Slide 2"></button>
+                        <button class="dot" type="button" aria-label="Slide 3"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Platzhalter: Sprungziele (Inhalt folgt in Teil 3) ===== -->
         <section id="benefits" class="section">
             <div class="container">
                 <h2>Vorteile</h2>
@@ -51,7 +100,53 @@
                 <p>Inhalt folgt.</p>
             </div>
         </section>
+
     </main>
 
+    <!-- ===== Slider-Script (Teil 2, Stufe 5) ===== -->
+    <script>
+        const slides = document.querySelectorAll(".slide");
+        const dots = document.querySelectorAll(".dot");
+        const prevBtn = document.querySelector(".prev");
+        const nextBtn = document.querySelector(".next");
+        let current = 0;
+        let timer;
+
+        function showSlide(index) {
+            slides[current].classList.remove("is-active");
+            dots[current].classList.remove("is-active");
+            current = (index + slides.length) % slides.length;
+            slides[current].classList.add("is-active");
+            dots[current].classList.add("is-active");
+        }
+
+        function startAutoPlay() {
+            timer = setInterval(() => showSlide(current + 1), 5200);
+        }
+
+        function resetAutoPlay() {
+            clearInterval(timer);
+            startAutoPlay();
+        }
+
+        prevBtn.addEventListener("click", () => {
+            showSlide(current - 1);
+            resetAutoPlay();
+        });
+
+        nextBtn.addEventListener("click", () => {
+            showSlide(current + 1);
+            resetAutoPlay();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => {
+                showSlide(index);
+                resetAutoPlay();
+            });
+        });
+
+        startAutoPlay();
+    </script>
 </body>
 </html>
