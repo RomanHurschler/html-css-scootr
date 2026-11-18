@@ -476,7 +476,104 @@ button:focus-visible {
 .footer-bottom p {
   margin: 0;
 }
+/* =========================================
+   9. Mietseite
+   ========================================= */
+.page-intro {
+  padding-top: var(--space-l);
+}
 
+.lead {
+  max-width: 60ch;
+  margin: var(--space-xs) 0 0;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+/* Schritte 1–2–3 (nutzt .grid und .card) */
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: var(--space-s);
+  border-radius: 50%;
+  background-color: var(--color-dark);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* Karte links, Stationen rechts – auf dem Handy untereinander */
+.map-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-s);
+}
+
+/* Kartenkasten: immer sichtbar, auch wenn die Karte nicht lädt */
+.map-box {
+  position: relative;
+  min-height: 450px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--color-surface);
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+/* Statusmeldung in der Mitte des Kastens */
+.map-status {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: var(--space-m);
+  text-align: center;
+  color: var(--color-muted);
+  background-color: var(--color-bg);
+}
+
+.map-status[hidden] {
+  display: none;
+}
+
+.map-status.is-error {
+  color: #9b2c2c;
+  background-color: #fdf2f2;
+}
+
+/* Stationsliste */
+.station-list {
+  display: grid;
+  gap: var(--space-s);
+  align-content: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.station {
+  padding: var(--space-s) var(--space-m);
+}
+
+@media (min-width: 900px) {
+  .map-layout {
+    grid-template-columns: 2fr 1fr;
+  }
+}
 /* =========================================
    9. Responsive
    ========================================= */

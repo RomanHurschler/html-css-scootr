@@ -1,23 +1,226 @@
 <!DOCTYPE html>
 <html lang="de-CH">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jetzt einen SCOOTR in Luzern finden und mieten.">
-  <title>Jetzt mieten – SCOOTR</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Finde den nächsten SCOOTR in Luzern und miete ihn direkt.">
+    <title>Jetzt mieten – SCOOTR</title>
+
+    <!-- Schriften (gleich wie Startseite) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body id="top">
 
-  <!-- Header & Navigation -->
+    <!-- ===== Header (gleich wie Startseite, Links zeigen auf index.html) ===== -->
+    <header class="site-header">
+        <div class="container nav-row">
+            <a href="index.html" class="brand">SCOOTR</a>
 
-  <main>
-    <!-- Mietbereich -->
+            <nav class="main-nav" aria-label="Hauptnavigation">
+                <a href="index.html#fleet">Fleet</a>
+                <a href="index.html#pricing">Preise</a>
+                <a href="index.html#benefits">Vorteile</a>
+                <a href="jetzt-mieten.html" aria-current="page">Jetzt mieten</a>
+            </nav>
 
-    <!-- Kartenbereich (Google Maps) -->
-  </main>
+            <a href="index.html" class="btn btn--outline nav-cta">&larr; Startseite</a>
+        </div>
+    </header>
 
-  <!-- Footer -->
+    <main>
 
+        <!-- ===== Einleitung: Infos vor der Hauptaktion ===== -->
+        <section class="section page-intro">
+            <div class="container">
+                <header class="section-head">
+                    <p class="eyebrow">Jetzt mieten</p>
+                    <h1>Finde deinen Scooter</h1>
+                    <p class="lead">Wähle eine Station auf der Karte, scanne den QR-Code am Scooter und fahr los.</p>
+                </header>
+
+                <ol class="grid grid--3 steps">
+                    <li class="card">
+                        <span class="step-number">1</span>
+                        <h3>Station finden</h3>
+                        <p>Auf der Karte siehst du alle Stationen mit freien Scootern.</p>
+                    </li>
+                    <li class="card">
+                        <span class="step-number">2</span>
+                        <h3>QR scannen</h3>
+                        <p>Code am Lenker scannen – der Scooter wird entsperrt.</p>
+                    </li>
+                    <li class="card">
+                        <span class="step-number">3</span>
+                        <h3>Losfahren</h3>
+                        <p>Fahrt in einer Parkzone beenden. Bezahlt wird pro Minute.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ===== Hauptaktion: Karte + Stationsliste ===== -->
+        <section class="section" aria-labelledby="map-title">
+            <div class="container">
+                <header class="section-head">
+                    <p class="eyebrow">Stationen</p>
+                    <h2 id="map-title">Scooter in deiner Nähe</h2>
+                </header>
+
+                <div class="map-layout">
+                    <!-- Kartenkasten: bleibt immer sichtbar (Höhe + Rahmen) -->
+                    <div class="map-box">
+                        <div id="map" aria-label="Karte mit Scooter-Standorten"></div>
+                        <p id="map-status" class="map-status" role="status">Karte wird geladen …</p>
+                    </div>
+
+                    <!-- Stationsliste: funktioniert auch ohne Karte -->
+                    <ul id="station-list" class="station-list" aria-label="Liste der Stationen"></ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== Footer (gleich wie Startseite) ===== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="brand">SCOOTR</a>
+                    <p>E-Scooter-Verleih für Luzern und die Region.</p>
+                </div>
+
+                <nav class="footer-col" aria-label="Footer-Navigation">
+                    <h3>Seiten</h3>
+                    <ul>
+                        <li><a href="index.html">Startseite</a></li>
+                        <li><a href="index.html#fleet">Fleet</a></li>
+                        <li><a href="index.html#pricing">Preise</a></li>
+                        <li><a href="jetzt-mieten.html">Jetzt mieten</a></li>
+                    </ul>
+                </nav>
+
+                <div class="footer-col">
+                    <h3>Kontakt</h3>
+                    <ul>
+                        <li><a href="mailto:hallo@scootr.ch">hallo@scootr.ch</a></li>
+                        <li><a href="tel:+41410000000">041 000 00 00</a></li>
+                        <li>Schweizerhofquai, 6004 Luzern</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 SCOOTR</p>
+                <p>Move clean. Move smart.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== Karte & Stationen ===== -->
+    <script>
+        // API-Key hier eintragen (statt Platzhalter)
+        const API_KEY = "AIzaSyAxHZ4O6ZznYZzTsXeDeHLMtuN6WaNS0ok";
+
+        // Standorte in Luzern
+        const spots = [
+            { name: "Bahnhof Luzern", lat: 47.0502, lng: 8.3102, scooters: 12 },
+            { name: "Kapellbrücke", lat: 47.0517, lng: 8.3077, scooters: 7 },
+            { name: "Schwanenplatz", lat: 47.0527, lng: 8.3099, scooters: 5 },
+            { name: "KKL Luzern", lat: 47.0507, lng: 8.3125, scooters: 9 },
+            { name: "Verkehrshaus", lat: 47.0526, lng: 8.3357, scooters: 4 }
+        ];
+
+        const statusEl = document.getElementById("map-status");
+        let loadTimer;
+
+        // --- Zustand der Karte anzeigen (lädt / Fehler) ---
+        function showStatus(text, isError) {
+            statusEl.textContent = text;
+            statusEl.hidden = false;
+            statusEl.classList.toggle("is-error", isError);
+        }
+
+        function hideStatus() {
+            statusEl.hidden = true;
+        }
+
+        // --- Stationsliste aus den Daten erzeugen ---
+        const list = document.getElementById("station-list");
+        spots.forEach((spot) => {
+            const item = document.createElement("li");
+            item.className = "card station";
+            item.innerHTML = `<h3>${spot.name}</h3><p>${spot.scooters} Scooter verfügbar</p>`;
+            list.appendChild(item);
+        });
+
+        // --- Wird von Google Maps aufgerufen, sobald die API geladen ist ---
+        function initMap() {
+            clearTimeout(loadTimer);
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                mapTypeControl: false,
+                streetViewControl: false
+            });
+
+            const bounds = new google.maps.LatLngBounds();
+            const infoWindow = new google.maps.InfoWindow();
+
+            spots.forEach((spot) => {
+                const marker = new google.maps.Marker({
+                    position: { lat: spot.lat, lng: spot.lng },
+                    map: map,
+                    title: spot.name
+                });
+
+                // Klick auf Marker zeigt Info
+                marker.addListener("click", () => {
+                    infoWindow.setContent(`<strong>${spot.name}</strong><br>${spot.scooters} Scooter verfügbar`);
+                    infoWindow.open({ anchor: marker, map: map });
+                });
+
+                bounds.extend(marker.getPosition());
+            });
+
+            // Karte so zoomen, dass alle Marker sichtbar sind
+            map.fitBounds(bounds);
+            hideStatus();
+        }
+
+        // --- Google meldet einen ungültigen oder gesperrten Key ---
+        window.gm_authFailure = () => {
+            showStatus("Karte nicht verfügbar: Der API-Key ist ungültig oder für diese Adresse nicht freigegeben.", true);
+        };
+
+        // --- Google Maps laden (nur wenn ein Key eingetragen ist) ---
+        function loadGoogleMaps() {
+            if (!API_KEY || API_KEY.startsWith("HIER_")) {
+                showStatus("Karte derzeit nicht verfügbar: Es ist noch kein API-Key eingetragen. Die Stationen findest du in der Liste.", true);
+                return;
+            }
+
+            const script = document.createElement("script");
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap&language=de&region=CH`;
+            script.async = true;
+
+            // Netzwerkfehler (z. B. offline)
+            script.onerror = () => {
+                showStatus("Karte konnte nicht geladen werden. Bitte prüfe deine Internetverbindung.", true);
+            };
+
+            document.head.appendChild(script);
+
+            // Falls nach 10 Sekunden noch nichts da ist
+            loadTimer = setTimeout(() => {
+                showStatus("Die Karte lädt ungewöhnlich lange. Bitte Seite neu laden.", true);
+            }, 10000);
+        }
+
+        loadGoogleMaps();
+    </script>
 </body>
 </html>
